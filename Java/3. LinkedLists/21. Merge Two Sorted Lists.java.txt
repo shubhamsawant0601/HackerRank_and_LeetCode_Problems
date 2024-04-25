@@ -1,0 +1,85 @@
+/**
+Q. Merge two sorted linked lists and return it as a sorted list. The list should be made by splicing together the nodes of the first two lists.
+
+Input: l1 = [1,2,4], l2 = [1,3,4]
+Output: [1,1,2,3,4,4]
+Example 2:
+
+Input: l1 = [], l2 = []
+Output: []
+Example 3:
+
+Input: l1 = [], l2 = [0]
+Output: [0]
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+/*
+1. Create condition to return the another list if one list is empty
+
+2. Create Head with new ListNode(0) function and assign to temp variable of ListNode object.
+
+3. While both lists are non-empty add node to temp who has value of value of node from two nodes. by comparing values of two list.
+
+4. apply condition for both list that if list is not empty append its nodes as we are out of first while loop condition atleast one list is empty.
+
+5. Return head.next.
+    
+*/  
+
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        
+        if(l1==null && l2==null){
+            return null;
+        }
+        else if(l1!=null && l2==null){
+            return l1;
+        }
+        else if(l1==null && l2!=null){
+            return l2;
+        }
+        
+        ListNode head = new ListNode(0);
+        ListNode temp = head;
+        
+        while(l1 != null && l2 != null){
+            
+            if(l1.val < l2.val){
+                temp.next = new ListNode(l1.val);
+                temp = temp.next;
+                l1 = l1.next;
+            }
+            else
+            {
+                temp.next = new ListNode(l2.val);
+                temp = temp.next;
+                l2 = l2.next;
+            }
+        }
+        if(l2 == null) {   
+           while(l1 != null){
+              temp.next = new ListNode(l1.val);
+              l1 = l1.next;
+              temp = temp.next;
+           }
+        }
+        
+        if(l1 == null) {
+           while(l2 != null){
+              temp.next = new ListNode(l2.val);
+              l2 = l2.next;
+              temp = temp.next;
+           }
+        }
+        
+        return head.next;
+    }
+}
